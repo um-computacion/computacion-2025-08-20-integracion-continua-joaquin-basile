@@ -1,4 +1,4 @@
-name: CI with Coverage and SonarCloud
+name: CI with Coverage
 
 on:
   push:
@@ -11,6 +11,9 @@ on:
 jobs:
   build-and-analyze:
     runs-on: ubuntu-latest
+
+    #Evitar bucle infinito
+    if: github.actor != 'github-actions[bot]'
 
     permissions:
       contents: write
