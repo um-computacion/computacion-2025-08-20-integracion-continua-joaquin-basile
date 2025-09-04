@@ -94,3 +94,16 @@ jobs:
           delete-branch: true
           base: main
 
+      - name: Auto-merge Pull Request
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        run: |
+          # Esperar un momento para que el PR esté completamente creado
+          sleep 5
+          
+          # Habilitar auto-merge y mergear inmediatamente
+          gh pr merge ${{ steps.cpr.outputs.pull-request-number }} \
+            --squash \
+            --delete-branch \
+            --admin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
