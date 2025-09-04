@@ -80,6 +80,7 @@ jobs:
 
       - name: Create Pull Request for reports
         if: github.ref == 'refs/heads/main'
+        id: cpr  # ← AGREGADO: ID del step
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -98,7 +99,7 @@ jobs:
           base: main
 
       - name: Auto-merge Pull Request
-        if: steps.cpr.outputs.pull-request-operation == 'created'
+        if: steps.cpr.outputs.pull-request-operation == 'created'  # ← CORREGIDO: referencia correcta
         run: |
           # Esperar un momento para que el PR esté completamente creado
           sleep 5
